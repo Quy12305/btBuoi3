@@ -1,1 +1,237 @@
+cau 1
+using System.Collections.Generic;
+using UnityEngine;
+
+public class cau1 : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.A))
+        {
+            Debug.Log("A");
+        }
+        if (Input.GetKey(KeyCode.B))
+        {
+            Debug.Log("B");
+        }
+        if (Input.GetKey(KeyCode.C))
+        {
+            Debug.Log("C");
+        }
+
+
+    }
+}
+
+
+cau 2
+ using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class cau2 : MonoBehaviour
+{
+    enum  POS
+    {
+        POS_1,
+        POS_2, 
+    }
+    Vector3 pos1 = new Vector3(4, 4, 0);
+    Vector3 pos2 = new Vector3(0, 4, 0);
+
+
+    Vector3 targetPos;
+    POS posEnum;
+    // Start is called before the first frame update
+    void Start()
+    {
+        targetPos = pos2;
+        posEnum = POS.POS_2;
+        this.transform.position = pos1;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 2f);
+        if(posEnum ==POS.POS_2 && transform.position.x <= targetPos.x)
+        {
+            targetPos= pos1;
+            posEnum = POS.POS_1;
+        }
+        else if (posEnum == POS.POS_1 && transform.position.x >= targetPos.x)
+        {
+            targetPos = pos2;
+            posEnum = POS.POS_2;
+        }
+
+    }
+}
+
+cau4
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class bai4 : MonoBehaviour
+{
+    public Vector3 startPosition;
+    public Vector3 endPosition = new Vector3(0, 0, 0);
+    public float duration = 5.0f;
+    private float startTime;
+    void Start()
+    {
+        startPosition = this.transform.position;
+        startTime = Time.time;
+    }
+
+    void Update()
+    {
+        float t = (Time.time - startTime) / duration;
+        transform.position = Vector3.Lerp(startPosition, endPosition, t);
+    }
+}
+
+cau 6
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class cau6 : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.position = new Vector3(transform.position.x+Time.deltaTime * 2f, transform.position.y, transform.position.z);
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.position = new Vector3(transform.position.x - Time.deltaTime * 2f, transform.position.y, transform.position.z);
+        }
+
+        if(Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.position = new Vector3(transform.position.x , transform.position.y + Time.deltaTime * 2f, transform.position.z);
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - Time.deltaTime * 2f, transform.position.z);
+        }
+    }
+}
+
+cau 7
+using Newtonsoft.Json.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class cau7 : MonoBehaviour
+{
+    enum POS
+    {
+        POS_1,
+        POS_2,
+        POS_3,
+    }
+    Vector3[] arr = { new Vector3(4, -0.5f, 0), new Vector3(0, -0.5f, 0), new Vector3(3, -1.5f, 0) };
+
+
+    Vector3 targetPos;
+    POS posEnum;
+    // Start is called before the first frame update
+    void Start()
+    {
+        targetPos = arr[2];
+        posEnum = POS.POS_2;
+        this.transform.position = arr[1];
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * 2f);
+        if(transform.position.x == targetPos.x)
+        {
+            int randomIndex = Random.Range(0, arr.Length);
+            targetPos = arr[randomIndex];
+            if(randomIndex == 0)
+            {
+                posEnum = POS.POS_1;
+            }
+            if (randomIndex == 1)
+            {
+                posEnum = POS.POS_2;
+            }
+            if (randomIndex == 2)
+            {
+                posEnum = POS.POS_3;
+            }
+        }
+    }
+}
+
+cau 10
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class cau10 : MonoBehaviour
+{
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    hit.collider.gameObject.GetComponent<Renderer>().material.color = Color.red;
+                }
+            }
+        }
+    }
+}
+
+btvn 3
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class btvn3 : MonoBehaviour
+{
+    void Update()
+    {
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                transform.position = Vector3.MoveTowards(transform.position, hit.point, Time.deltaTime * 2f); 
+            }
+        }
+    }
+}
 
